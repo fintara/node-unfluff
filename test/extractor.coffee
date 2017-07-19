@@ -60,6 +60,11 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, "2014-10-15T00:01:03+00:00"
 
+  test 'doesnt take date from tag with update', ->
+    doc = cheerio.load("<html><head><title></title></head><body><time datetime=\"2014-10-15T00:01:03+00:00\">text</time><p class=\"last-update\">bad text</p></body></html>")
+    date = extractor.date(doc)
+    eq date, "2014-10-15T00:01:03+00:00"
+
   test 'returns the article dublin core meta date', ->
       doc = cheerio.load("<html><head><meta name=\"DC.date.issued\" content=\"2014-10-15T00:01:03+00:00\" /></head></html>")
       date = extractor.date(doc)
