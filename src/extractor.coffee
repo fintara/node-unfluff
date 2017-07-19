@@ -26,7 +26,7 @@ module.exports =
     li[property*='datePublished'], \
     time, \
     span[class*='date'], \
-    p[class*='date'], \
+    p[class*='date']:not([class*='update']), \
     div[class*='date']")
     cleanNull(dateCandidates?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates?.first()?.text()) || null
 
