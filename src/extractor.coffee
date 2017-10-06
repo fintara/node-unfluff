@@ -27,6 +27,7 @@ module.exports =
     time, \
     span[class*='date'], \
     p[class*='date']:not([class*='update']), \
+    div[class*='submitted'], \
     div[class*='date']")
     cleanNull(dateCandidates?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates?.first()?.text()) || null
 

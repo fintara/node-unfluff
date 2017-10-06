@@ -75,6 +75,11 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, "24 May, 2010"
 
+  test 'returns the date in the div.submitted element', ->
+    doc = cheerio.load("<html><head></head><body><div class=\"submitted\">24 May, 2010</div></body></html>")
+    date = extractor.date(doc)
+    eq date, "24 May, 2010"
+
   test 'returns the date in the <time> element datetime attribute', ->
     doc = cheerio.load("<html><head></head><body><time datetime=\"2010-05-24T13:47:52+0000\">24 May, 2010</time></body></html>")
     date = extractor.date(doc)
