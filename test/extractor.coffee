@@ -80,6 +80,16 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, "24 May, 2010"
 
+  test 'returns the date in the span.*Date element', ->
+    doc = cheerio.load("<html><head></head><body><span class=\"publishDate\" data-date=\"06.10.2017 15:57\">06.10.2017 15:57</span></body></html>")
+    date = extractor.date(doc)
+    eq date, "06.10.2017 15:57"
+
+  test 'returns the date in the div.fl-right element in div.article-meta-data parent', ->
+    doc = cheerio.load("<html><head></head><body><div class=\"article-meta-data\"><div class=\"fl-right\">24 May, 2010</div></div></body></html>")
+    date = extractor.date(doc)
+    eq date, "24 May, 2010"
+
   test 'returns the date in the <time> element datetime attribute', ->
     doc = cheerio.load("<html><head></head><body><time datetime=\"2010-05-24T13:47:52+0000\">24 May, 2010</time></body></html>")
     date = extractor.date(doc)

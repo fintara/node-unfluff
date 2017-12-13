@@ -26,8 +26,10 @@ module.exports =
     li[property*='datePublished'], \
     time, \
     span[class*='date'], \
+    span[class*='Date'], \
     p[class*='date']:not([class*='update']), \
     div[class*='submitted'], \
+    div[class='article-meta-data'] div[class='fl-right'], \
     div[class*='date']")
     cleanNull(dateCandidates?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates?.first()?.text()) || null
 
