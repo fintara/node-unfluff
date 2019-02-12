@@ -104,6 +104,7 @@ module.exports =
   image: (doc) ->
     images = doc("meta[property='og:image'], \
     meta[property='og:image:url'], \
+    meta[property='og:image:secure_url'], \
     meta[itemprop=image], \
     meta[name='twitter:image:src'], \
     meta[name='twitter:image'], \
