@@ -25,8 +25,10 @@ module.exports =
     li[itemprop*='datePublished'], \
     li[property*='datePublished'], \
     time, \
-    span[class*='date'], \
+    span[class*='date']:not([class*='update']), \
+    span[id*='date']:not([id*='update']), \
     span[class*='Date'], \
+    span[id*='Date'], \
     p[class*='date']:not([class*='update']), \
     div[class*='submitted'], \
     div[class='article-meta-data'] div[class='fl-right'], \

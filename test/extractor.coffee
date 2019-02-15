@@ -95,6 +95,11 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, "2010-05-24T13:47:52+0000"
 
+  test 'returns the date in span#article_disp_date', ->
+    doc = cheerio.load('<html><head></head><body><small class="article-date grey-light"><span id="article_disp_date">2018-11-30</span><a href="#comments">Komentarze:</a></span></small></body></html>')
+    date = extractor.date(doc)
+    eq date, "2018-11-30"
+
   test 'returns nothing if date eq "null"', ->
     doc = cheerio.load("<html><head><meta property=\"article:published_time\" content=\"null\" /></head></html>")
     date = extractor.date(doc)
