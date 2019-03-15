@@ -115,6 +115,15 @@ module.exports =
     if images.length > 0 && cleanNull(images.first().attr('content'))
       return cleanNull(images.first().attr('content'))
 
+    logos = doc("[class*='logo'] img, \
+    img[src*='logo']")
+    if logos.length > 0 && cleanNull(logos.first().attr('src'))
+      return cleanNull(logos.first().attr('src'))
+
+    favicon = doc("link[rel*='icon']")
+    if favicon.length > 0 && cleanNull(favicon.first().attr('href'))
+      return cleanNull(favicon.first().attr('href'))
+    
     null
 
   # Find any links in the doc
