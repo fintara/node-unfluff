@@ -5,6 +5,7 @@ formatter = require("./formatter")
 module.exports =
   # Grab the date of an html doc
   date: (doc) ->
+    # highest priority, most likely date is here
     dateCandidates1 = doc("meta[property='article:published_time'], \
     meta[itemprop*='datePublished'], meta[name='dcterms.modified'], \
     meta[name='dcterms.date'], \
@@ -17,6 +18,12 @@ module.exports =
     time[itemprop*='pubDate'], \
     time[itemprop*='pubdate'], \
     time")
+    if dateCandidates1.length > 0
+      value = cleanNull(dateCandidates1?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates1?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates1?.first()?.text())
+      if value
+        return value
+
+    # second priority, date might be here
     dateCandidates2 = doc("span[itemprop*='datePublished'], \
     span[property*='datePublished'], \
     p[itemprop*='datePublished'], \
@@ -33,14 +40,19 @@ module.exports =
     div[class*='submitted'], \
     div[class='article-meta-data'] div[class='fl-right'], \
     div[class*='date']")
-    cleanNull(dateCandidates1?.first()?.attr("content"))?.trim() ||
-    cleanNull(dateCandidates1?.first()?.attr("datetime"))?.trim() ||
-    cleanText(dateCandidates1?.first()?.text()) ||
-    cleanNull(dateCandidates2?.first()?.attr("content"))?.trim() ||
-    cleanNull(dateCandidates2?.first()?.attr("datetime"))?.trim() ||
-    cleanText(dateCandidates2?.first()?.text()) ||
-    null
+    if dateCandidates2.length > 0
+      value = cleanNull(dateCandidates2?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates2?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates2?.first()?.text())
+      if value
+        return value
 
+    # desperate
+    dateCandidates3 = doc("[class*='header']")
+    for elem in dateCandidates3
+      value = cleanText(doc(elem).contents().filter(-> @type == 'text').text())
+      if value
+        return value
+
+    null
 
   # Grab the copyright line
   copyright: (doc) ->

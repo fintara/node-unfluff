@@ -110,6 +110,11 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, null
 
+  test 'returns date with magic', ->
+    doc = cheerio.load('<html><head></head><body><h1 class="ui header" style="font-size:2rem"><div class="content">Konsekwencje Brexitu w wariancie No Deal<div class="sub header">Utworzona: 2019-01-28</div></div></h1></body></html>')
+    date = extractor.date(doc)
+    eq date, 'Utworzona: 2019-01-28'
+
   test 'returns the copyright line element', ->
     doc = cheerio.load("<html><head></head><body><div>Some stuff</div><ul><li class='copyright'><!-- // some garbage -->© 2016 The World Bank Group, All Rights Reserved.</li></ul></body></html>")
     copyright = extractor.copyright(doc)
