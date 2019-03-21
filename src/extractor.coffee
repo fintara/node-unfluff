@@ -46,10 +46,19 @@ module.exports =
         return value
 
     # desperate
-    dateCandidates3 = doc("[class*='header']")
+    patterns = [/\d{4}.\d{2}.\d{2}/, /\d{2}.\d{2}.\d{4}/]
+    dateCandidates3 = doc("[class*='header'], \
+    [id*='Info'], \
+    [class*='Szczego'], [class*='szczego']")
     for elem in dateCandidates3
       value = cleanText(doc(elem).contents().filter(-> @type == 'text').text())
-      if value
+      if value && patterns.some (pattern) -> value.match(pattern)
+        return value
+
+    # even more desperate
+    for elem in dateCandidates3
+      value = cleanText(doc(elem).text())
+      if value && patterns.some (pattern) -> value.match(pattern)
         return value
 
     null

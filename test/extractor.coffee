@@ -115,6 +115,16 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, 'Utworzona: 2019-01-28'
 
+  test 'returns date with magic 2', ->
+    doc = cheerio.load('<html><head></head><body><div id="sobiItemDetailInfo"><b>Buskerud, Lierskogen</b>&nbsp; | &nbsp;21-02-2019 15:16 &nbsp; | &nbsp;Numer ogłoszenia: 87856</div></body></html>')
+    date = extractor.date(doc)
+    eq date, '| 21-02-2019 15:16 | Numer ogłoszenia: 87856'
+
+  test 'returns date with magic 3', ->
+    doc = cheerio.load('<html><head></head><body><div class="wiadSzczegol"><p><span>| </span>inf. pras.  <span class="kropka">⚫</span> źródło: Budimex <span class="kropka">⚫</span> 01.02.2019 <span class="kropka">⚫</span> <span class="kom"><a href="https://www.rynekinfrastruktury.pl/wiadomosci/drogi/kolejny-odcinek-obwodnicy-olsztyna-oddany-budimex-znow-przed-terminem--65875.html#disqus_thread" data-disqus-identifier="65875">skomentowano 3 razy</a> </span><span>▶</span> </p></div></body></html>')
+    date = extractor.date(doc)
+    eq date, '| inf. pras. ⚫ źródło: Budimex ⚫ 01.02.2019 ⚫ skomentowano 3 razy ▶'
+
   test 'returns the copyright line element', ->
     doc = cheerio.load("<html><head></head><body><div>Some stuff</div><ul><li class='copyright'><!-- // some garbage -->© 2016 The World Bank Group, All Rights Reserved.</li></ul></body></html>")
     copyright = extractor.copyright(doc)
