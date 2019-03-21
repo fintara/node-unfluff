@@ -5,7 +5,7 @@ formatter = require("./formatter")
 module.exports =
   # Grab the date of an html doc
   date: (doc) ->
-    dateCandidates = doc("meta[property='article:published_time'], \
+    dateCandidates1 = doc("meta[property='article:published_time'], \
     meta[itemprop*='datePublished'], meta[name='dcterms.modified'], \
     meta[name='dcterms.date'], \
     meta[name='DC.date.issued'],  meta[name='dc.date.issued'], \
@@ -16,7 +16,8 @@ module.exports =
     meta[name='date'], \
     time[itemprop*='pubDate'], \
     time[itemprop*='pubdate'], \
-    span[itemprop*='datePublished'], \
+    time")
+    dateCandidates2 = doc("span[itemprop*='datePublished'], \
     span[property*='datePublished'], \
     p[itemprop*='datePublished'], \
     p[property*='datePublished'], \
@@ -24,7 +25,6 @@ module.exports =
     div[property*='datePublished'], \
     li[itemprop*='datePublished'], \
     li[property*='datePublished'], \
-    time, \
     span[class*='date']:not([class*='update']), \
     span[id*='date']:not([id*='update']), \
     span[class*='Date'], \
@@ -33,7 +33,13 @@ module.exports =
     div[class*='submitted'], \
     div[class='article-meta-data'] div[class='fl-right'], \
     div[class*='date']")
-    cleanNull(dateCandidates?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates?.first()?.text()) || null
+    cleanNull(dateCandidates1?.first()?.attr("content"))?.trim() ||
+    cleanNull(dateCandidates1?.first()?.attr("datetime"))?.trim() ||
+    cleanText(dateCandidates1?.first()?.text()) ||
+    cleanNull(dateCandidates2?.first()?.attr("content"))?.trim() ||
+    cleanNull(dateCandidates2?.first()?.attr("datetime"))?.trim() ||
+    cleanText(dateCandidates2?.first()?.text()) ||
+    null
 
 
   # Grab the copyright line
