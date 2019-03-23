@@ -115,6 +115,11 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, '20 marca 2019'
 
+  test 'returns date in class meta', ->
+    doc = cheerio.load('<html><head></head><body><div class="meta desktop"><ul class="list-8"><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="fb.png" alt="" width="25"> Udostępnij</a></li><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="tw.png" alt="" width="25"> Tweetnij</a></li><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="in.png" alt="" width="25"> Podziel się</a></li><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="email.png" alt="" width="25"> Wyślij na e-mail</a></li>		<li><a class="comment" href="#comment"><img src="comm.png" alt="" width="25"> Skomentuj</a></li></ul><ul class="list-9"><li><small>Autor:</small><span>xyz.pl</span></li><li><small>Dodano:</small><span>04 paź 2018 08:36</span></li></ul></div></body></html>')
+    date = extractor.date(doc)
+    eq date, '04 paź 2018 08:36'
+
   test 'returns date with magic', ->
     doc = cheerio.load('<html><head></head><body><h1 class="ui header" style="font-size:2rem"><div class="content">Konsekwencje Brexitu w wariancie No Deal<div class="sub header">Utworzona: 2019-01-28</div></div></h1></body></html>')
     date = extractor.date(doc)
@@ -128,7 +133,7 @@ suite 'Extractor', ->
   test 'returns date with magic 3', ->
     doc = cheerio.load('<html><head></head><body><div class="wiadSzczegol"><p><span>| </span>inf. pras.  <span class="kropka">⚫</span> źródło: Budimex <span class="kropka">⚫</span> 01.02.2019 <span class="kropka">⚫</span> <span class="kom"><a href="https://www.rynekinfrastruktury.pl/wiadomosci/drogi/kolejny-odcinek-obwodnicy-olsztyna-oddany-budimex-znow-przed-terminem--65875.html#disqus_thread" data-disqus-identifier="65875">skomentowano 3 razy</a> </span><span>▶</span> </p></div></body></html>')
     date = extractor.date(doc)
-    eq date, '| inf. pras. ⚫ źródło: Budimex ⚫ 01.02.2019 ⚫ skomentowano 3 razy ▶'
+    eq date, '01.02.2019'
 
   test 'returns the copyright line element', ->
     doc = cheerio.load("<html><head></head><body><div>Some stuff</div><ul><li class='copyright'><!-- // some garbage -->© 2016 The World Bank Group, All Rights Reserved.</li></ul></body></html>")

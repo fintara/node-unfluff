@@ -50,13 +50,29 @@ module.exports =
     dateCandidates3 = doc("[class*='header'], \
     [id*='Info'], \
     [class*='Szczego'], [class*='szczego'], \
-    [class*='intro']")
+    [class*='intro'], [class*='meta']")
     for elem in dateCandidates3
       value = cleanText(doc(elem).contents().filter(-> @type == 'text').text())
       if value && patterns.some (pattern) -> value.match(pattern)
         return value
 
-    # even more desperate
+    # desperate 2
+    recursive = (el) ->
+      if el.children
+        for child in el.children
+          value = recursive(child)
+          if value
+            return value
+      value = cleanText(doc(el).text())
+      if value && patterns.some (pattern) -> value.match(pattern)
+        return value
+
+    for elem in dateCandidates3
+      value = recursive(elem)
+      if value
+        return value
+
+    # desperado
     for elem in dateCandidates3
       value = cleanText(doc(elem).text())
       if value && patterns.some (pattern) -> value.match(pattern)
