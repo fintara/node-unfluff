@@ -36,7 +36,11 @@ module.exports =
     span[id*='date']:not([id*='update']), \
     span[class*='Date'], \
     span[id*='Date'], \
+    [class*='info'], \
     p[class*='date']:not([class*='update']), \
+    [class*='data']:not([class*='user']), \
+    [id*='data'], \
+    [class~='odc'], \
     div[class*='submitted'], \
     div[class='article-meta-data'] div[class='fl-right'], \
     div[class*='date']")

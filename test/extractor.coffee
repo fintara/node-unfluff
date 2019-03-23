@@ -115,6 +115,31 @@ suite 'Extractor', ->
     date = extractor.date(doc)
     eq date, '20 marca 2019'
 
+  test 'returns date in class article-info', ->
+    doc = cheerio.load('<html><head></head><body><div class="userdata">User Password</div><dl class="article-info"><dd class="create">Utworzono: środa, 12, wrzesień 2018 18:37</dd></dl></body></html>')
+    date = extractor.date(doc)
+    eq date, 'Utworzono: środa, 12, wrzesień 2018 18:37'
+
+  test 'returns date in class odc', ->
+    doc = cheerio.load('<html><head></head><body><div class="title-cell h_single"><span class="odc box-shadow">2019-03-20</span><h1>Wyjątkowy desing pojazdów MAN nagrodzony</h1></div></body></html>')
+    date = extractor.date(doc)
+    eq date, '2019-03-20'
+
+  test 'returns date in class data 1', ->
+    doc = cheerio.load('<html><head></head><body><div class="data" style="padding: 3px;font-size: 12px;float: right;">(2019-01-14)</div></body></html>')
+    date = extractor.date(doc)
+    eq date, '(2019-01-14)'
+
+  test 'returns date in class data 2', ->
+    doc = cheerio.load('<html><head></head><body><div class="pageHead"><h1 class="pageTitle">Answear.com wynajmie magazyn w 7R Park Kraków</h1><div class="author">7R SA</div><div class="dataInfo"><span>13 marca 2019</span></div></div></body></html>')
+    date = extractor.date(doc)
+    eq date, '13 marca 2019'
+
+  test 'returns date in id data', ->
+    doc = cheerio.load('<html><head></head><body><div id="dodano_data">2019-03-21  &nbsp;|&nbsp; <span>06:30</span></div></body></html>')
+    date = extractor.date(doc)
+    eq date, '2019-03-21 | 06:30'
+
   test 'returns date in class meta 1', ->
     doc = cheerio.load('<html><head></head><body><div class="meta desktop"><ul class="list-8"><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="fb.png" alt="" width="25"> Udostępnij</a></li><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="tw.png" alt="" width="25"> Tweetnij</a></li><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="in.png" alt="" width="25"> Podziel się</a></li><li><a href="xyz.html" rel="external nofollow" target="_blank"><img src="email.png" alt="" width="25"> Wyślij na e-mail</a></li>		<li><a class="comment" href="#comment"><img src="comm.png" alt="" width="25"> Skomentuj</a></li></ul><ul class="list-9"><li><small>Autor:</small><span>xyz.pl</span></li><li><small>Dodano:</small><span>04 paź 2018 08:36</span></li></ul></div></body></html>')
     date = extractor.date(doc)
