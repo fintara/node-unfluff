@@ -36,7 +36,7 @@ module.exports =
     span[id*='date']:not([id*='update']), \
     span[class*='Date'], \
     span[id*='Date'], \
-    [class*='info'], \
+    [class*='info']:not([class*='information']), \
     p[class*='date']:not([class*='update']), \
     [class*='data']:not([class*='user']), \
     [id*='data'], \

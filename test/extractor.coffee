@@ -111,7 +111,7 @@ suite 'Extractor', ->
     eq date, null
 
   test 'returns date in class news_date', ->
-    doc = cheerio.load('<html><head></head><body><div id="Div2" class="vx_text intro"><p>20 marca 2019</p></div></body></html>')
+    doc = cheerio.load('<html><head></head><body><div id="Div2" class="vx_text intro"><p>20 marca 2019</p></div><ul><li class="menu-112762 site-map first"><a href="/footer/site-map.aspx">Mapa Strony</a></li><li class="menu-112763 rss-feeds"><a href="/footer/rss-feeds.aspx">Kanały RSS</a></li><li class="menu-112766 accessibility-policy"><a href="/footer/accessibility-policy.aspx">Polityka dostępności</a></li><li class="menu-112767 terms-of-use"><a href="/footer/terms-of-use.aspx">Zasady użytkowania</a></li><li class="menu-112768 privacy-policy"><a href="/footer/privacy-policy.aspx">Polityka prywatności</a></li><li class="menu-246103 information-clause last"><a href="/footer/information-clause.aspx">Klauzula informacyjna</a></li></ul></body></html>')
     date = extractor.date(doc)
     eq date, '20 marca 2019'
 
