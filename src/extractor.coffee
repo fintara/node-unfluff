@@ -51,12 +51,8 @@ module.exports =
     [id*='Info'], \
     [class*='Szczego'], [class*='szczego'], \
     [class*='intro'], [class*='meta']")
-    for elem in dateCandidates3
-      value = cleanText(doc(elem).contents().filter(-> @type == 'text').text())
-      if value && patterns.some (pattern) -> value.match(pattern)
-        return value
 
-    # desperate 2
+    # attempt 1: try to find date pattern in innermost child
     recursive = (el) ->
       if el.children
         for child in el.children
