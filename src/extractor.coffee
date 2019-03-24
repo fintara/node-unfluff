@@ -19,9 +19,21 @@ module.exports =
     time[itemprop*='pubdate'], \
     time")
     if dateCandidates1.length > 0
-      value = cleanNull(dateCandidates1?.first()?.attr("content"))?.trim() || cleanNull(dateCandidates1?.first()?.attr("datetime"))?.trim() || cleanText(dateCandidates1?.first()?.text())
-      if value
-        return value
+      content = cleanNull(dateCandidates1?.first()?.attr("content"))?.trim()
+      if content
+        return content
+
+      datetime = cleanNull(dateCandidates1?.first()?.attr("datetime"))?.trim()
+      text = cleanText(dateCandidates1?.first()?.text())
+
+      if datetime && text && datetime.indexOf(':') == -1 && text.indexOf(':') != -1
+        return text
+
+      if datetime
+        return datetime
+
+      if text
+        return text
 
     # second priority, date might be here
     dateCandidates2 = doc("span[itemprop*='datePublished'], \

@@ -98,7 +98,7 @@ suite 'Extractor', ->
   test 'retunrs the date in <time> element with highest precedence', ->
     doc = cheerio.load('<html><head></head><body><div class="header-date" id="header-day"><span class="day" id="header-date-day"></span><span class="date" id="header-date-date"></span><a class="reader-link" href="xxx" title="Dzisiejsze wydanie"><span class="reader-link-text" id="header-reader-link">Dzisiejsze wydanie papierowe</span></a></div><div class="art-author-meta-container"><time id="art-datetime" class="art-datetime" datetime="2019-03-08">8 marca 2019 | 14:06</time></div></body></html>')
     date = extractor.date(doc)
-    eq date, "2019-03-08"
+    eq date, "8 marca 2019 | 14:06"
 
   test 'returns the date in span#article_disp_date', ->
     doc = cheerio.load('<html><head></head><body><small class="article-date grey-light"><span id="article_disp_date">2018-11-30</span><a href="#comments">Komentarze:</a></span></small></body></html>')
@@ -119,6 +119,11 @@ suite 'Extractor', ->
     doc = cheerio.load('<html><head></head><body><div class="userdata">User Password</div><dl class="article-info"><dd class="create">Utworzono: środa, 12, wrzesień 2018 18:37</dd></dl></body></html>')
     date = extractor.date(doc)
     eq date, 'Utworzono: środa, 12, wrzesień 2018 18:37'
+
+  test 'returns date with time from datetime prop', ->
+    doc = cheerio.load('<html><head></head><body><div class="art-author-meta-container"><time id="art-datetime" class="art-datetime" datetime="2019-03-23">23 marca 2019 | 05:57</time></div></body></html>')
+    date = extractor.date(doc)
+    eq date, '23 marca 2019 | 05:57'
 
   test 'returns date in class odc', ->
     doc = cheerio.load('<html><head></head><body><div class="title-cell h_single"><span class="odc box-shadow">2019-03-20</span><h1>Wyjątkowy desing pojazdów MAN nagrodzony</h1></div></body></html>')
